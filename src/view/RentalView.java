@@ -96,17 +96,25 @@ public class RentalView extends JFrame {
     }
 
     public RentalView() {
-        setTitle("Rental PS SHAFIXX");
+        setTitle("Sistem Manajemen Rental PS Pro Final");
         setSize(1000, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
         getContentPane().setBackground(COLOR_BG);
 
         UIManager.put("TabbedPane.background", COLOR_BG);
         UIManager.put("TabbedPane.selected", COLOR_CARD);
         UIManager.put("TabbedPane.font", FONT_BOLD);
+        /*
+        JLabel lblTitle = new JLabel("Sistem Manajemen Rental PlayStation", SwingConstants.CENTER);
+        lblTitle.setFont(new Font("SansSerif", Font.BOLD, 22));
+        lblTitle.setForeground(COLOR_PRIMARY);
+        lblTitle.setBorder(new EmptyBorder(18, 0, 10, 0));
+        add(lblTitle, BorderLayout.NORTH);
+        */
 
         JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+        tabbedPane.setBorder(new EmptyBorder(0, 10, 10, 10));
 
         JPanel pnlRental = new JPanel(new BorderLayout(15, 15));
         pnlRental.setBackground(COLOR_BG);
@@ -251,11 +259,16 @@ public class RentalView extends JFrame {
         tabbedPane.addTab("Riwayat Transaksi", pnlTransaksi);
         tabbedPane.addTab("Kelola Member", pnlManageMember);
         tabbedPane.addTab("Kelola PlayStation", pnlManagePS);
-        add(tabbedPane);
+        add(tabbedPane, BorderLayout.CENTER);
     }
 
     private JTable createModernTable(DefaultTableModel model) {
-        JTable table = new JTable(model);
+        JTable table = new JTable(model) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         table.setFont(FONT_MAIN);
         table.setRowHeight(30);
         table.setGridColor(new Color(243, 244, 246));
@@ -334,4 +347,16 @@ public class RentalView extends JFrame {
     public JButton getBtnPsTambah() { return btnPsTambah; }
     public JButton getBtnPsUbah() { return btnPsUbah; }
     public JButton getBtnPsHapus() { return btnPsHapus; }
+
+    // Kontrol editable/disabled form Member (Ubah & Hapus)
+    public void setMemberFormEditable(boolean editable) {
+        btnMemberUbah.setEnabled(editable);
+        btnMemberHapus.setEnabled(editable);
+    }
+
+    // Kontrol editable/disabled form PS (Ubah & Hapus)
+    public void setPsFormEditable(boolean editable) {
+        btnPsUbah.setEnabled(editable);
+        btnPsHapus.setEnabled(editable);
+    }
 }
